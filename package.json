@@ -1,0 +1,28 @@
+{
+  "name": "z15_server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "express.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/o2cRoss/z15_server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/o2cRoss/z15_server/issues"
+  },
+  "homepage": "https://github.com/o2cRoss/z15_server#readme",
+  "devDependencies": {
+    "express": "^4.17.1"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^3.1.5",
+    "express-formidable": "^1.2.0",
+    "multer": "^1.4.2"
+  }
+}
