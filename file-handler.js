@@ -20,10 +20,11 @@ router.get('/', (req, res) => {
 router.post('/upload', upload.single('file'), (req, res, next) => {
 
 });
-
+console.log("用户上传接口 --- ok");
 
 router.get('/download', (req, res) => {
   res.download('./public/tmp.js');
 });
+console.log("用户下载接口 --- ok");
 
 module.exports = router;

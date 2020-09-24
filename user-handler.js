@@ -10,38 +10,34 @@ router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(formidableMiddleware());
 
-//mysql
-const mysql = require('mysql');
-//加载mysql配置
-const dbConfig = require('./db/DBConfig');
-//加载查询命令条
-const querySQL = require('./db/querysql');
-//根据配置创建一个mysql连接池
-let pool = mysql.createPool(dbConfig.mysql);
-//响应JSON数据
-let responseJSON = function (res, ret) {
-  if (typeof ret == 'undefined') {
-    res.json({ code: "-200", msg: "操作失败" });
-  } else {
-    res.json(ret);
-  }
-};
+//加载mysql连接池模块
+let mypool = require('./mysql-pool');
+
+router.post('/checkuser', (req, res) => {
+  console.log(req.fields.user);
+  mypool.pool.getConnection((err, connection) => {
+    connection.query(mypool.querySQL.queryUser(req.fields.user), (err, result) => {
+      mypool.responseJSON(res, result);
+      connection.release();
+    });
+  });
+});
 
 //测试数据库用
 router.get('/test', (req, res) => {
-  pool.getConnection((err, connection) => {
+  mypool.pool.getConnection((err, connection) => {
     console.log(req.query);
-    connection.query('SELECT * FROM livedata', (err, result) => {
-      responseJSON(res, result);
+    connection.query(mypool.querySQL.queryUserID(req.query.id), (err, result) => {
+      mypool.responseJSON(res, result);
       connection.release();
     });
   });
 });
 console.log("用户数据查询接口 --- ok");
 
-//用户表单提交
+//用户登陆接口
 router.post('/', (req, res) => {
-  console.log(req.fields.user);// contains non-file fields
+  console.log(req.fields.user);//提交的表格内容在fields字段
   let right_info = new Object();
   if (req.fields.user == 'zjhl' && req.fields.password == 'zjhl') {
 
