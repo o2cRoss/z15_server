@@ -13,17 +13,58 @@ router.use(formidableMiddleware());
 //加载mysql连接池模块
 let mypool = require('./mysql-pool');
 
+//检查用户是否存在
 router.post('/checkuser', (req, res) => {
   console.log(req.fields.user);
   mypool.pool.getConnection((err, connection) => {
     connection.query(mypool.querySQL.queryUser(req.fields.user), (err, result) => {
-      mypool.responseJSON(res, result);
+      if(err){
+        console.log("cuowu");
+        console.log(mypool.querySQL.queryUser(req.fields.user));
+      }else{
+        mypool.responseJSON(res, result);
+      }
+      connection.release();
+    });
+  });
+});
+console.log("用户数据查询接口 --- ok");
+
+//注册用户
+router.post('/register', (req, res) => {
+  console.log(req.fields.user);
+  mypool.pool.getConnection((err, connection) => {
+    connection.query(mypool.querySQL.registerUser(req.fields.user, req.fields.password, req.fields.power), (err, result) => {
+      if(err){
+        console.log("cuowu1");
+        console.log(mypool.querySQL.registerUser(req.fields.user, req.fields.password, req.fields.power));
+      }else{
+        mypool.responseJSON(res, result);
+      }
       connection.release();
     });
   });
 });
 
-//测试数据库用
+//用户登陆接口
+router.post('/login', (req, res) => {
+  console.log(req.fields.user);//提交的表格内容在fields字段
+  mypool.pool.getConnection((err, connection) => {
+    connection.query(mypool.querySQL.loginUser(req.fields.user, req.fields.password), (err, result) => {
+      if(err){
+        console.log("cuowu");
+        console.log(mypool.querySQL.loginUser(req.fields.user, req.fields.password));
+      }else{
+        mypool.responseJSON(res, result);
+        console.log(result);
+        console.log(mypool.querySQL.loginUser(req.fields.user, req.fields.password));
+      }
+      connection.release();
+    });
+  });
+});
+
+//测试数据库用 公司服务器z06获取当前设备
 router.get('/test', (req, res) => {
   mypool.pool.getConnection((err, connection) => {
     console.log(req.query);
@@ -33,7 +74,6 @@ router.get('/test', (req, res) => {
     });
   });
 });
-console.log("用户数据查询接口 --- ok");
 
 //用户登陆接口
 router.post('/', (req, res) => {
