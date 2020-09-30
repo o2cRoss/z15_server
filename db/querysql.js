@@ -25,8 +25,19 @@ const registerUser = (user,password,power) => {
   return 'INSERT INTO users (username, password, power, reg_time, lastlogin_time) VALUES (\''+user+'\', \''+password+'\','+ power +',NOW(),NOW())'
 }
 
+//获取所有用户
+const AllUsers = (start, end) => {
+  return 'SELECT id,username,power,reg_time,lastlogin_time FROM users LIMIT ' + start + ', ' + end
+}
+
+//删除用户
+const delUser = (id) => {
+  return 'DELETE FROM users WHERE id=' + id
+}
 exports.queryUser = queryUser;
 exports.livedataSQL = livedataSQL;
 exports.queryUserID = queryUserID;
 exports.registerUser = registerUser;
 exports.loginUser = loginUser;
+exports.AllUsers = AllUsers;
+exports.delUser = delUser;

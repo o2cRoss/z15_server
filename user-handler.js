@@ -64,6 +64,41 @@ router.post('/login', (req, res) => {
   });
 });
 
+//查询所有用户
+router.post('/allusers', (req, res) => {
+  console.log(req.fields.user);//提交的表格内容在fields字段
+  mypool.pool.getConnection((err, connection) => {
+    connection.query(mypool.querySQL.AllUsers(req.fields.start, req.fields.end), (err, result) => {
+      if(err){
+        console.log("cuowu");
+        console.log(mypool.querySQL.AllUsers(req.fields.start, req.fields.end));
+      }else{
+        mypool.responseJSON(res, result);
+        console.log(result);
+        console.log(mypool.querySQL.AllUsers(req.fields.start, req.fields.end));
+      }
+      connection.release();
+    });
+  });
+});
+
+//根据id删除用户
+router.post('/deluser', (req, res) => {
+  console.log(req.fields.user);//提交的表格内容在fields字段
+  mypool.pool.getConnection((err, connection) => {
+    connection.query(mypool.querySQL.delUser(req.fields.id), (err, result) => {
+      if(err){
+        console.log("cuowu");
+        console.log(mypool.querySQL.delUser(req.fields.id));
+      }else{
+        mypool.responseJSON(res, result);
+        console.log(result);
+        console.log(mypool.querySQL.delUser(req.fields.id));
+      }
+      connection.release();
+    });
+  });
+});
 //测试数据库用 公司服务器z06获取当前设备
 router.get('/test', (req, res) => {
   mypool.pool.getConnection((err, connection) => {
