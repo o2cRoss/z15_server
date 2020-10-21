@@ -12,6 +12,7 @@ router.use(formidableMiddleware());
 
 //加载mysql连接池模块
 let mypool = require('./mysql-pool');
+console.log("001、用户处理模块开始加载...");
 
 //检查用户是否存在
 router.post('/checkuser', (req, res) => {
@@ -28,7 +29,7 @@ router.post('/checkuser', (req, res) => {
     });
   });
 });
-console.log("用户数据查询接口 --- ok");
+console.log("   01、用户查重接口准备完成.");
 
 //注册用户
 router.post('/register', (req, res) => {
@@ -45,6 +46,7 @@ router.post('/register', (req, res) => {
     });
   });
 });
+console.log("   02、用户注册接口准备完成.");
 
 //用户登陆接口
 router.post('/login', (req, res) => {
@@ -63,6 +65,7 @@ router.post('/login', (req, res) => {
     });
   });
 });
+console.log("   03、用户登录接口准备完成.");
 
 //查询所有用户
 router.post('/allusers', (req, res) => {
@@ -81,6 +84,7 @@ router.post('/allusers', (req, res) => {
     });
   });
 });
+console.log("   04、用户列表接口准备完成.");
 
 //根据id删除用户
 router.post('/deluser', (req, res) => {
@@ -99,6 +103,8 @@ router.post('/deluser', (req, res) => {
     });
   });
 });
+console.log("   05、用户注册接口准备完成.");
+
 //测试数据库用 公司服务器z06获取当前设备
 router.get('/test', (req, res) => {
   mypool.pool.getConnection((err, connection) => {
@@ -130,5 +136,5 @@ router.post('/', (req, res) => {
 });
 
 
-console.log("用户模块加载完毕");
+console.log("001、用户处理模块加载完毕...");
 module.exports = router;
