@@ -14,24 +14,41 @@ router.use(formidableMiddleware());
 let mypool = require('./mysql-pool');
 console.log("002、数据处理模块开始加载...");
 
-//查询所有用户
+//查询实时数据接口
 router.post('/nowdata', (req, res) => {
-  console.log(req.fields.user);//提交的表格内容在fields字段
+  //console.log(req.fields);//提交的表格内容在fields字段
+
   mypool.pool.getConnection((err, connection) => {
-    connection.query(mypool.querySQL.AllUsers(req.fields.start, req.fields.end), (err, result) => {
+    connection.query(mypool.querySQL.AllStations(req.fields.stations), (err, result) => {
       if(err){
-        console.log("cuowu");
-        console.log(mypool.querySQL.AllUsers(req.fields.start, req.fields.end));
+        console.log("cuowu1");
+        console.log(mypool.querySQL.AllStations(req.fields.stations));
       }else{
         mypool.responseJSON(res, result);
-        console.log(result);
-        console.log(mypool.querySQL.AllUsers(req.fields.start, req.fields.end));
       }
       connection.release();
     });
   });
 });
-console.log("   04、用户列表接口准备完成.");
+console.log("   01、实时数据接口准备完成.");
+
+//获取设备中文名称接口
+router.post('/getcn', (req, res) => {
+  console.log(req.fields);//提交的表格内容在fields字段
+
+  mypool.pool.getConnection((err, connection) => {
+    connection.query(mypool.querySQL.GetDeviceCN(), (err, result) => {
+      if(err){
+        console.log("cuowu1");
+        console.log(mypool.querySQL.AllStations());
+      }else{
+        mypool.responseJSON(res, result);
+      }
+      connection.release();
+    });
+  });
+});
+console.log("   02、设备中文接口准备完成.");
 
 console.log("002、数据处理模块加载完毕...");
 module.exports = router;

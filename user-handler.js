@@ -35,10 +35,10 @@ console.log("   01、用户查重接口准备完成.");
 router.post('/register', (req, res) => {
   console.log(req.fields.user);
   mypool.pool.getConnection((err, connection) => {
-    connection.query(mypool.querySQL.registerUser(req.fields.user, req.fields.password, req.fields.power), (err, result) => {
+    connection.query(mypool.querySQL.registerUser(req.fields.user, req.fields.password, req.fields.power, req.fields.stations), (err, result) => {
       if(err){
         console.log("cuowu1");
-        console.log(mypool.querySQL.registerUser(req.fields.user, req.fields.password, req.fields.power));
+        console.log(mypool.querySQL.registerUser(req.fields.user, req.fields.password, req.fields.power, req.fields.stations));
       }else{
         mypool.responseJSON(res, result);
       }

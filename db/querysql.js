@@ -21,8 +21,8 @@ const loginUser = (user, password) => {
 }
 
 //注册用户
-const registerUser = (user,password,power) => {
-  return 'INSERT INTO users (username, password, power, reg_time, lastlogin_time) VALUES (\''+user+'\', \''+password+'\','+ power +',NOW(),NOW())'
+const registerUser = (user,password,power,stations) => {
+  return 'INSERT INTO users (username, password, power, stations, reg_time, lastlogin_time) VALUES (\''+user+'\', \''+password+'\','+ power +',\''+ stations +'\',NOW(),NOW())'
 }
 
 //获取所有用户
@@ -34,6 +34,19 @@ const AllUsers = (start, end) => {
 const delUser = (id) => {
   return 'DELETE FROM users WHERE id=' + id
 }
+
+//-------------------下面是数据方面的查询代码
+
+//查询站点
+const AllStations = (stations) =>{
+  return 'SELECT * FROM nowdata WHERE station IN('+stations+')'
+}
+
+//获取设备中文名称
+const GetDeviceCN = () =>{
+  return 'SELECT * FROM devicelist'
+}
+
 exports.queryUser = queryUser;
 exports.livedataSQL = livedataSQL;
 exports.queryUserID = queryUserID;
@@ -41,3 +54,6 @@ exports.registerUser = registerUser;
 exports.loginUser = loginUser;
 exports.AllUsers = AllUsers;
 exports.delUser = delUser;
+
+exports.AllStations = AllStations;
+exports.GetDeviceCN = GetDeviceCN;
