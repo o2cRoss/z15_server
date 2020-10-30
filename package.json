@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/o2cRoss/z15_server#readme",
   "devDependencies": {
+    "axios": "^0.21.0",
     "express": "^4.17.1"
   },
   "dependencies": {
@@ -24,6 +25,7 @@
     "ejs": "^3.1.5",
     "express-formidable": "^1.2.0",
     "multer": "^1.4.2",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "qs": "^6.9.4"
   }
 }
