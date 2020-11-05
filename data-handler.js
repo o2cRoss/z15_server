@@ -107,5 +107,24 @@ router.post('/getvediotoken', (req, res) => {
 });
 console.log("   03、视频密钥接口准备完成.");
 
+//查询历史数据接口
+router.post('/history', (req, res) => {
+  //console.log(req.fields);//提交的表格内容在fields字段
+
+  mypool.pool.getConnection((err, connection) => {
+    connection.query(mypool.querySQL.GetHistoryData(req.fields.stations,req.fields.strings,req.fields.starttime,req.fields.endtime), (err, result) => {
+      if(err){
+        console.log("cuowu1");
+        console.log(mypool.querySQL.GetHistoryData(req.fields.stations,req.fields.strings,req.fields.starttime,req.fields.endtime));
+      }else{
+        mypool.responseJSON(res, result);
+        //console.log(result);
+      }
+      connection.release();
+    });
+  });
+});
+console.log("   04、历史数据接口准备完成.");
+
 console.log("002、数据处理模块加载完毕...");
 module.exports = router;

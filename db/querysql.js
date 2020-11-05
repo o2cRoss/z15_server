@@ -1,5 +1,7 @@
 //定义SQL查询命令
 
+const ExpressFormidable = require("express-formidable");
+
 //查询整个表数据
 let livedataSQL = {
   query: 'SELECT * FROM livedata'
@@ -47,6 +49,10 @@ const GetDeviceCN = () =>{
   return 'SELECT * FROM devicelist'
 }
 
+const GetHistoryData=(stations,fileds,starttime,endtime)=>{
+  return 'SELECT date_time,'+fileds+' FROM (SELECT station,date_time,'+fileds+' FROM data WHERE unix_time BETWEEN '+starttime+' AND '+endtime+') AS data1 WHERE station IN('+stations+')'
+}
+
 exports.queryUser = queryUser;
 exports.livedataSQL = livedataSQL;
 exports.queryUserID = queryUserID;
@@ -57,3 +63,4 @@ exports.delUser = delUser;
 
 exports.AllStations = AllStations;
 exports.GetDeviceCN = GetDeviceCN;
+exports.GetHistoryData = GetHistoryData;
