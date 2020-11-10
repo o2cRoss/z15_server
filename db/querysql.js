@@ -53,6 +53,9 @@ const GetHistoryData=(stations,fileds,starttime,endtime)=>{
   return 'SELECT date_time,'+fileds+' FROM (SELECT station,date_time,'+fileds+' FROM data WHERE unix_time BETWEEN '+starttime+' AND '+endtime+') AS data1 WHERE station IN('+stations+')'
 }
 
+const GetHistoryData1=(stations,starttime,endtime)=>{
+  return 'SELECT * FROM (SELECT * FROM data WHERE unix_time BETWEEN '+starttime+' AND '+endtime+') AS data1 WHERE station='+stations
+}
 exports.queryUser = queryUser;
 exports.livedataSQL = livedataSQL;
 exports.queryUserID = queryUserID;
@@ -64,3 +67,4 @@ exports.delUser = delUser;
 exports.AllStations = AllStations;
 exports.GetDeviceCN = GetDeviceCN;
 exports.GetHistoryData = GetHistoryData;
+exports.GetHistoryData1 = GetHistoryData1;

@@ -1,6 +1,6 @@
 const express = require('express');
 const axios = require('axios');
-const qs = require('qs')
+const qs = require('qs');
 const router = express.Router();
 
 const appKey = {
